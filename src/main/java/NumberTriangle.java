@@ -5,31 +5,25 @@ import java.util.List;
 
 /**
  * This is the provided NumberTriangle class to be used in this coding task.
- *
  * Note: This is like a tree, but some nodes in the structure have two parents.
- *
  * The structure is shown below. Observe that the parents of e are b and c, whereas
  * d and f each only have one parent. Each row is complete and will never be missing
  * a node. So each row has one more NumberTriangle object than the row above it.
- *
  *                  a
  *                b   c
  *              d   e   f
  *            h   i   j   k
- *
  * Also note that this data structure is minimally defined and is only intended to
  * be constructed using the loadTriangle method, which you will implement
  * in this file. We have not included any code to enforce the structure noted above,
  * and you don't have to write any either.
- *
- *
  * See NumberTriangleTest.java for a few basic test cases.
- *
  * Extra: If you decide to solve the Project Euler problems (see main),
  *        feel free to add extra methods to this class. Just make sure that your
  *        code still compiles and runs so that we can run the tests on your code.
  *
  */
+
 public class NumberTriangle {
 
     private int root;
@@ -62,9 +56,7 @@ public class NumberTriangle {
      * Set the root of this NumberTriangle to be the max path sum
      * of this NumberTriangle, as defined in Project Euler problem 18.
      * After this method is called, this NumberTriangle should be a leaf.
-     *
      * Hint: think recursively and use the idea of partial tracing from first year :)
-     *
      * Note: a NumberTriangle contains at least one value.
      */
     public void maxSumPath() {
@@ -81,9 +73,7 @@ public class NumberTriangle {
      * Follow path through this NumberTriangle structure ('l' = left; 'r' = right) and
      * return the root value at the end of the path. An empty string will return
      * the root of the NumberTriangle.
-     *
      * You can decide if you want to use a recursive or an iterative approach in your solution.
-     *
      * You can assume that:
      *      the length of path is less than the height of this NumberTriangle structure.
      *      each character in the string is either 'l' or 'r'
@@ -94,7 +84,7 @@ public class NumberTriangle {
      */
     public int retrieve(String path) {
         char[] pathar =  path.toCharArray();
-        if (path.length() == 0) {
+        if (path.isEmpty()) {
             return this.getRoot();
         }
         else if (path.length() == 1) {
@@ -115,10 +105,8 @@ public class NumberTriangle {
     }
 
     /** Read in the NumberTriangle structure from a file.
-     *
      * You may assume that it is a valid format with a height of at least 1,
      * so there is at least one line with a number on it to start the file.
-     *
      * See resources/input_tree.txt for an example NumberTriangle format.
      *
      * @param fname the file to load the NumberTriangle structure from
@@ -129,17 +117,18 @@ public class NumberTriangle {
         // open the file and get a BufferedReader object whose methods
         // are more convenient to work with when reading the file contents.
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
+        assert inputStream != null;
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+        NumberTriangle top;
 
-        List<Object> triangles = new ArrayList<>();
-        List<Object> triangleList = new ArrayList<>();
+        List<List<String>> triangles = new ArrayList<>();
+        List<List<NumberTriangle>> triangleList = new ArrayList<>();
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
 
 
         String line = br.readLine();
-        NumberTriangle top = new NumberTriangle(Integer.parseInt(line));
         while (line != null) {
             triangles.add(Arrays.asList(line.split(" ")));
             //read the next line
@@ -147,24 +136,23 @@ public class NumberTriangle {
         }
         br.close();
 
-        for (int i = 0; i < triangles.size(); i++) {
-            List<Object> smltrlst = new ArrayList<>();
-            List<Object> trianglein = (List<Object>) triangles.get(i);
-            for  (int j = 0; j < trianglein.size(); j++) {
-                smltrlst.add(new NumberTriangle(Integer.parseInt((String)trianglein.get(j))));
+        for (List<String> triangle : triangles) {
+            List<NumberTriangle> smltrlst = new ArrayList<>();
+            for (String s : triangle) {
+                smltrlst.add(new NumberTriangle(Integer.parseInt(s)));
             }
             triangleList.add(smltrlst);
         }
         for (int i = 0; i < triangleList.size()-1; i++) {
-            List<Object> innerList = (List<Object>) triangleList.get(i);
-            List<Object> innerListnext = (List<Object>) triangleList.get(i+1);
+            List<NumberTriangle> innerList = triangleList.get(i);
+            List<NumberTriangle> innerListnext = triangleList.get(i+1);
             for (int j = 0; j < innerList.size(); j++) {
-                List<Object> twolist = new  ArrayList<>();
+                List<NumberTriangle> twolist = new  ArrayList<>();
                 for (int l = j; l < j + 2; l++) {
                     twolist.add(innerListnext.get(l));
                 }
-                ((NumberTriangle)innerList.get(j)).setLeft((NumberTriangle)twolist.get(0));
-                ((NumberTriangle)innerList.get(j)).setRight((NumberTriangle)twolist.get(1));
+                (innerList.get(j)).setLeft(twolist.get(0));
+                (innerList.get(j)).setRight(twolist.get(1));
             }
         }
         top = ((NumberTriangle) ((ArrayList<?>) triangleList.get(0)).get(0));
