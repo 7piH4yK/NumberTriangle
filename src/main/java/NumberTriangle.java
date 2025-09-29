@@ -131,8 +131,8 @@ public class NumberTriangle {
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-        List<Object> triangles = new ArrayList<>();
-        List<Object> triangleList = new ArrayList<>();
+        List<Object> triangles = new ArrayList<Object>();
+        List<Object> triangleList = new ArrayList<Object>();
         NumberTriangle top;
 
         // will need to return the top of the NumberTriangle,
@@ -148,7 +148,7 @@ public class NumberTriangle {
         br.close();
 
         for (int i = 0; i < triangles.size(); i++) {
-            List<Object> smltrlst = new ArrayList<>();
+            List<Object> smltrlst = new ArrayList<Object>();
             List<Object> trianglein = (List<Object>) triangles.get(i);
             for  (int j = 0; j < trianglein.size(); j++) {
                 smltrlst.add(new NumberTriangle(Integer.parseInt((String)trianglein.get(j))));
@@ -159,7 +159,7 @@ public class NumberTriangle {
             List<Object> innerList = (List<Object>) triangleList.get(i);
             List<Object> innerListnext = (List<Object>) triangleList.get(i+1);
             for (int j = 0; j < innerList.size(); j++) {
-                List<Object> twolist = new  ArrayList<>();
+                List<Object> twolist = new  ArrayList<Object>();
                 for (int l = j; l < j + 2; l++) {
                     twolist.add(innerListnext.get(l));
                 }
