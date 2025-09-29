@@ -1,4 +1,7 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This is the provided NumberTriangle class to be used in this coding task.
@@ -36,6 +39,8 @@ public class NumberTriangle {
 
     public NumberTriangle(int root) {
         this.root = root;
+        this.right = null;
+        this.left = null;
     }
 
     public void setLeft(NumberTriangle left) {
@@ -88,8 +93,10 @@ public class NumberTriangle {
      *
      */
     public int retrieve(String path) {
-        // TODO implement this method
-        return -1;
+        char[] pathar =  path.toCharArray();
+        if (path.isEmpty()) {return this.getRoot();}
+        else if (pathar[0]=='l') {return this.left.retrieve(Arrays.toString(Arrays.copyOfRange(pathar, 1, pathar.length-1)));}
+        else {return this.right.retrieve(Arrays.toString(Arrays.copyOfRange(pathar, 1, pathar.length-1)));}
     }
 
     /** Read in the NumberTriangle structure from a file.
@@ -109,25 +116,41 @@ public class NumberTriangle {
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-
         // TODO define any variables that you want to use to store things
+        List<Object> triangles = new ArrayList<>();
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
-        NumberTriangle top = null;
+
 
         String line = br.readLine();
+        NumberTriangle top = new NumberTriangle(Integer.parseInt(line));
         while (line != null) {
-
-            // remove when done; this line is included so running starter code prints the contents of the file
+                // remove when done; this line is included so running starter code prints the contents of the file
             System.out.println(line);
-
+            triangles.add(Arrays.asList(line.split(" ")));
             // TODO process the line
 
             //read the next line
             line = br.readLine();
         }
         br.close();
+        System.out.println(triangles);
+        for (int i = 0; i < triangles.size()-1; i++) {
+            List<Object> innerList = (List<Object>) triangles.get(i);
+            List<Object> innerListnext = (List<Object>) triangles.get(i+1);
+            for (int j = 0; j < innerList.size(); j++) {
+                System.out.println(innerList.get(j));
+
+                List<Integer> intlist = new  ArrayList<>();
+                for (int l = j; l < j + 2; l++) {
+                    intlist.add(Integer.parseInt((String) innerListnext.get(l)));
+                }
+                System.out.println(intlist);
+                // (j+1).setLeft(j.right)
+            }
+            System.out.println('-');
+        }
         return top;
     }
 
