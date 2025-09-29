@@ -133,13 +133,13 @@ public class NumberTriangle {
 
         List<Object> triangles = new ArrayList<>();
         List<Object> triangleList = new ArrayList<>();
+        NumberTriangle top;
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
 
 
         String line = br.readLine();
-        NumberTriangle top = new NumberTriangle(Integer.parseInt(line));
         while (line != null) {
             triangles.add(Arrays.asList(line.split(" ")));
             //read the next line
