@@ -119,10 +119,10 @@ public class NumberTriangle {
         InputStream inputStream = NumberTriangle.class.getClassLoader().getResourceAsStream(fname);
         assert inputStream != null;
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-
-        List<Object> triangles = new ArrayList<Object>();
-        List<Object> triangleList = new ArrayList<Object>();
         NumberTriangle top;
+
+        List<List<String>> triangles = new ArrayList<>();
+        List<List<NumberTriangle>> triangleList = new ArrayList<>();
 
         // will need to return the top of the NumberTriangle,
         // so might want a variable for that.
